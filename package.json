@@ -1,0 +1,27 @@
+{
+  "name": "week-03-ecommerce",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cd app/api && node server.js",
+    "start": "cd app/api && node server.js",
+    "seed": "node seed.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ileenize/vibe-code-ecommerce.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Ileenize/vibe-code-ecommerce/issues"
+  },
+  "homepage": "https://github.com/Ileenize/vibe-code-ecommerce#readme",
+  "dependencies": {
+    "mongodb": "^7.5.0"
+  }
+}

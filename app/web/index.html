@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meeting First Game — Board Game Meetup Platform</title>
+  <meta name="description" content="หาเพื่อนเล่นบอร์ดเกม จับคู่ตี้ จองโต๊ะที่คาเฟ่บอร์ดเกมในขอนแก่น ง่าย เร็ว สนุก" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="logo" id="nav-logo">
+        <span class="logo-icon">🎲</span>
+        <span class="logo-text">Meeting<span class="logo-accent">First</span>Game</span>
+      </a>
+      <div class="nav-links">
+        <a href="#" class="nav-link" id="nav-home" onclick="showPage('home')">หน้าแรก</a>
+        <a href="#" class="nav-link" id="nav-meetups" onclick="showPage('meetups')">ตี้ทั้งหมด</a>
+        <a href="#" class="nav-link" id="nav-cafes" onclick="showPage('cafes')">คาเฟ่</a>
+        <a href="#" class="nav-link" id="nav-my-bookings" onclick="showPage('my-bookings')" style="display:none">การจองของฉัน</a>
+        <a href="#" class="nav-link" id="nav-dashboard" onclick="showPage('dashboard')" style="display:none">แดชบอร์ดร้าน</a>
+      </div>
+      <div class="nav-right">
+        <div id="user-area-logged-out" class="user-area">
+          <button class="btn btn-outline" id="btn-login" onclick="openLoginModal()">เข้าสู่ระบบ</button>
+        </div>
+        <div id="user-area-logged-in" class="user-area" style="display:none">
+          <span class="user-badge" id="user-badge-text"></span>
+          <button class="btn btn-ghost" onclick="logout()">ออกจากระบบ</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGES CONTAINER -->
+  <main id="app-root">
+
+    <!-- ======================== HOME PAGE ======================== -->
+    <section id="page-home" class="page active">
+      <!-- HERO -->
+      <div class="hero">
+        <div class="hero-bg">
+          <div class="hero-orb orb-1"></div>
+          <div class="hero-orb orb-2"></div>
+          <div class="hero-orb orb-3"></div>
+          <div class="hero-grid"></div>
+        </div>
+        <div class="hero-content">
+          <div class="hero-badge">🎯 Platform จับคู่ตี้บอร์ดเกม #1 ในขอนแก่น</div>
+          <h1 class="hero-title">หาเพื่อน<br/><span class="gradient-text">เล่นบอร์ดเกม</span><br/>ง่ายกว่าเดิม</h1>
+          <p class="hero-sub">ค้นหาตี้ที่กำลังรับสมัคร เข้าร่วมและจ่ายมัดจำ<br/>เพื่อยืนยันสิทธิ์ได้ทันที — ไม่มีนัดล่มอีกต่อไป</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-lg" onclick="showPage('meetups')">
+              <span>ดูตี้ทั้งหมด</span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd"/></svg>
+            </button>
+            <button class="btn btn-outline btn-lg" onclick="showPage('cafes')">สำรวจคาเฟ่</button>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="floating-cards">
+            <div class="f-card fc-1">
+              <div class="fc-icon">🎲</div>
+              <div class="fc-body">
+                <div class="fc-title">Catan Friday Night</div>
+                <div class="fc-sub">Meeple Corner Cafe · 18:30</div>
+                <div class="fc-badge recruiting">กำลังรับ</div>
+              </div>
+            </div>
+            <div class="f-card fc-2">
+              <div class="fc-icon">🐺</div>
+              <div class="fc-body">
+                <div class="fc-title">Werewolf Social Night</div>
+                <div class="fc-sub">Lucky Dice Cafe · 19:00</div>
+                <div class="fc-badge confirmed">ยืนยันแล้ว</div>
+              </div>
+            </div>
+            <div class="f-card fc-3">
+              <div class="fc-icon">🃏</div>
+              <div class="fc-body">
+                <div class="fc-title">Sunday Open Table</div>
+                <div class="fc-sub">Lucky Dice Cafe · 13:00</div>
+                <div class="fc-badge recruiting">กำลังรับ</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div class="stats-bar">
+        <div class="stat-item">
+          <span class="stat-num" id="stat-meetups">—</span>
+          <span class="stat-label">ตี้ทั้งหมด</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num" id="stat-cafes">—</span>
+          <span class="stat-label">คาเฟ่</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num" id="stat-games">—</span>
+          <span class="stat-label">บอร์ดเกม</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num" id="stat-recruiting">—</span>
+          <span class="stat-label">กำลังรับสมาชิก</span>
+        </div>
+      </div>
+
+      <!-- FEATURED MEETUPS -->
+      <div class="section">
+        <div class="section-header">
+          <h2 class="section-title">ตี้ที่กำลังรับสมาชิก</h2>
+          <button class="btn btn-ghost" onclick="showPage('meetups')">ดูทั้งหมด →</button>
+        </div>
+        <div class="meetup-grid" id="home-meetup-grid">
+          <div class="loading-state"><div class="spinner"></div><span>กำลังโหลด...</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================== MEETUPS PAGE ======================== -->
+    <section id="page-meetups" class="page">
+      <div class="page-header">
+        <h1 class="page-title">ตี้บอร์ดเกมทั้งหมด</h1>
+        <button class="btn btn-primary" id="btn-create-meetup" onclick="openCreateMeetupModal()" style="display:none">
+          + สร้างตี้ใหม่
+        </button>
+      </div>
+
+      <!-- Filters -->
+      <div class="filter-bar" id="meetups-filter">
+        <div class="filter-group">
+          <label class="filter-label">สถานะ</label>
+          <div class="filter-chips" id="filter-status">
+            <button class="chip active" data-val="" onclick="filterMeetups(this, 'status')">ทั้งหมด</button>
+            <button class="chip" data-val="recruiting" onclick="filterMeetups(this, 'status')">🟢 กำลังรับ</button>
+            <button class="chip" data-val="confirmed" onclick="filterMeetups(this, 'status')">🔵 ยืนยัน</button>
+            <button class="chip" data-val="completed" onclick="filterMeetups(this, 'status')">✅ เสร็จแล้ว</button>
+          </div>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label">หมวดเกม</label>
+          <div class="filter-chips" id="filter-category">
+            <button class="chip active" data-val="" onclick="filterMeetups(this, 'category')">ทั้งหมด</button>
+            <button class="chip" data-val="strategy" onclick="filterMeetups(this, 'category')">🏆 Strategy</button>
+            <button class="chip" data-val="party" onclick="filterMeetups(this, 'category')">🎉 Party</button>
+            <button class="chip" data-val="coop" onclick="filterMeetups(this, 'category')">🤝 Co-op</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="meetup-grid" id="meetups-grid">
+        <div class="loading-state"><div class="spinner"></div><span>กำลังโหลด...</span></div>
+      </div>
+    </section>
+
+    <!-- ======================== CAFES PAGE ======================== -->
+    <section id="page-cafes" class="page">
+      <div class="page-header">
+        <h1 class="page-title">คาเฟ่บอร์ดเกม</h1>
+      </div>
+      <div class="cafes-grid" id="cafes-grid">
+        <div class="loading-state"><div class="spinner"></div><span>กำลังโหลด...</span></div>
+      </div>
+    </section>
+
+    <!-- ======================== MY BOOKINGS PAGE ======================== -->
+    <section id="page-my-bookings" class="page">
+      <div class="page-header">
+        <h1 class="page-title">การจองของฉัน</h1>
+      </div>
+      <div class="bookings-list" id="bookings-list">
+        <div class="loading-state"><div class="spinner"></div><span>กำลังโหลด...</span></div>
+      </div>
+    </section>
+
+    <!-- ======================== DASHBOARD PAGE ======================== -->
+    <section id="page-dashboard" class="page">
+      <div class="page-header">
+        <h1 class="page-title">แดชบอร์ดร้านคาเฟ่</h1>
+        <span class="cafe-badge-header" id="dashboard-cafe-name"></span>
+      </div>
+      <div class="dashboard-stats" id="dashboard-stats"></div>
+      <div class="dashboard-meetups" id="dashboard-meetups">
+        <div class="loading-state"><div class="spinner"></div><span>กำลังโหลด...</span></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================== MODALS ======================== -->
+
+  <!-- Login Modal -->
+  <div id="modal-login" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-login')">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="login-title">
+      <div class="modal-header">
+        <h2 class="modal-title" id="login-title">🎲 เข้าสู่ระบบ</h2>
+        <button class="modal-close" onclick="closeModal('modal-login')" aria-label="Close">✕</button>
+      </div>
+      <p class="modal-subtitle">เลือกผู้ใช้งาน (สำหรับ Demo)</p>
+      <div class="user-select-list" id="user-select-list">
+        <div class="loading-state"><div class="spinner"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Meetup Detail Modal -->
+  <div id="modal-meetup" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-meetup')">
+    <div class="modal modal-lg" role="dialog" aria-modal="true" aria-labelledby="meetup-modal-title">
+      <div class="modal-header">
+        <h2 class="modal-title" id="meetup-modal-title">รายละเอียดตี้</h2>
+        <button class="modal-close" onclick="closeModal('modal-meetup')" aria-label="Close">✕</button>
+      </div>
+      <div id="meetup-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Create Meetup Modal -->
+  <div id="modal-create-meetup" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-create-meetup')">
+    <div class="modal modal-lg" role="dialog" aria-modal="true" aria-labelledby="create-meetup-title">
+      <div class="modal-header">
+        <h2 class="modal-title" id="create-meetup-title">➕ สร้างตี้ใหม่</h2>
+        <button class="modal-close" onclick="closeModal('modal-create-meetup')" aria-label="Close">✕</button>
+      </div>
+      <form id="create-meetup-form" onsubmit="submitCreateMeetup(event)">
+        <div class="form-grid">
+          <div class="form-group full">
+            <label class="form-label" for="cm-title">ชื่อตี้ *</label>
+            <input id="cm-title" type="text" class="form-input" placeholder="เช่น Catan Friday Night" required />
+          </div>
+          <div class="form-group full">
+            <label class="form-label" for="cm-description">คำอธิบาย</label>
+            <textarea id="cm-description" class="form-input form-textarea" placeholder="รายละเอียดเพิ่มเติม..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cm-cafe">คาเฟ่ *</label>
+            <select id="cm-cafe" class="form-input form-select" required></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cm-type">ประเภทตี้ *</label>
+            <select id="cm-type" class="form-input form-select" required onchange="toggleGameSelect()">
+              <option value="open">Open (ยังไม่ระบุเกม)</option>
+              <option value="specific">Specific (ระบุเกม)</option>
+            </select>
+          </div>
+          <div class="form-group" id="cm-game-group" style="display:none">
+            <label class="form-label" for="cm-game">เกม</label>
+            <select id="cm-game" class="form-input form-select"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cm-date">วันที่ *</label>
+            <input id="cm-date" type="date" class="form-input" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cm-start">เวลาเริ่ม *</label>
+            <input id="cm-start" type="time" class="form-input" value="18:00" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cm-end">เวลาสิ้นสุด *</label>
+            <input id="cm-end" type="time" class="form-input" value="20:00" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cm-min">ผู้เล่นขั้นต่ำ *</label>
+            <input id="cm-min" type="number" class="form-input" min="2" max="12" value="3" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cm-max">ผู้เล่นสูงสุด *</label>
+            <input id="cm-max" type="number" class="form-input" min="2" max="20" value="6" required />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" onclick="closeModal('modal-create-meetup')">ยกเลิก</button>
+          <button type="submit" class="btn btn-primary" id="create-meetup-submit">สร้างตี้</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Cafe Detail Modal -->
+  <div id="modal-cafe" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-cafe')">
+    <div class="modal modal-lg" role="dialog" aria-modal="true" aria-labelledby="cafe-modal-title">
+      <div class="modal-header">
+        <h2 class="modal-title" id="cafe-modal-title">รายละเอียดคาเฟ่</h2>
+        <button class="modal-close" onclick="closeModal('modal-cafe')" aria-label="Close">✕</button>
+      </div>
+      <div id="cafe-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast-container" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
